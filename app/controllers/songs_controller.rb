@@ -1,10 +1,18 @@
 class SongsController < ApplicationController
-  def index
-    @songs = Song.all
+  def index #conditional for whether user navigates to /aritsts/:id/songs or /songs 
+    if params[:artist_id] #rails provides the artist_id param through the nested route by appending _id to the parent resources' name 
+      @songs = Artist.find(params[:artist_id]).songs
+    else 
+      @songs = Song.all
+    end
   end
 
   def show
+    #unlinke index that will render different sets of songs based on the path, this one stays the same. 
     @song = Song.find(params[:id])
+    if @song.nil?
+      redirect_to artist_songs_path(@song.artist)
+    end 
   end
 
   def new
