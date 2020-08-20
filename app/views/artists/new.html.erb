@@ -5,5 +5,9 @@
   <%= f.text_field :name %>
   <br />
 
+  <%= f.fields_for :songs, @song do |as| %>
+    <%= as.label :name %>
+    <%= as.text_field :name %>
+ <% end %>
   <%= f.submit %>
 <% end %>
